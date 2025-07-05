@@ -23,7 +23,7 @@ export const HeroSection = () => {
               speed={60}
               repeat={Infinity}
               wrapper="span"
-              className="text-primary dark:text-white"
+              className="text-primary dark:dark"
             />
           </h1>
 

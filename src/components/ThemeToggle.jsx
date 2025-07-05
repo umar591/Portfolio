@@ -56,7 +56,9 @@ export const ThemeToggle = () => {
 
   useEffect(() => {
     const storedTheme = localStorage.getItem("theme");
-    if (storedTheme === "dark") {
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+    if (storedTheme === "dark" || (!storedTheme && prefersDark)) {
       document.documentElement.classList.add("dark");
       setIsDarkMode(true);
     } else {
@@ -73,14 +75,17 @@ export const ThemeToggle = () => {
   };
 
   return (
-    <Draggable bounds="body">
+    <Draggable
+      bounds="body"
+      cancel=".theme-toggle-btn" // ✅ This allows button to receive click!
+    >
       <div
         className="fixed z-[9999] top-[70px] right-[20px] md:right-[40px] md:top-[30px]"
-        style={{ cursor: "grab", touchAction: "none" }}
+        style={{ touchAction: "none", cursor: "grab" }}
       >
         <button
           onClick={toggleTheme}
-          className="p-3 rounded-full bg-white dark:bg-black border shadow-md"
+          className="theme-toggle-btn p-3 "
         >
           {isDarkMode ? (
             <Sun className="h-6 w-6 text-yellow-300" />
@@ -92,3 +97,4 @@ export const ThemeToggle = () => {
     </Draggable>
   );
 };
+
